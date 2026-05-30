@@ -1,29 +1,326 @@
-h1,
-h3 {
-  margin: 20px;
+.home-container {
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  margin: 0;
+  padding-bottom: 4rem;
 }
 
-h1 {
-  text-align: center;
+/* User Card Styles */
+.user-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #007bff;
 }
 
-#gradeEventos {
-  align-items: center;
+.user-header {
   display: flex;
-  margin: 40px;
+  align-items: center;
+  gap: 1.5rem;
 }
 
-.card-body button {
-  margin: 10px auto;
-  border: none;
-  padding: 5px;
-  width: 100%;
-  color: #fff;
+.user-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.user-name {
+  margin: 0 0 0.5rem 0;
+  color: #212529;
   font-weight: 600;
-  border-radius: 6px;
-  background-color: rgb(107, 214, 107);
+  font-size: 1.5rem;
 }
 
-.card-body button:hover {
-  transform: scale(1.02);
+.user-email {
+  margin: 0.5rem 0;
+  color: #6c757d;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge-admin {
+  background-color: #28a745;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge-user {
+  background-color: #17a2b8;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Events Section Header */
+.events-header {
+  margin-bottom: 2rem;
+}
+
+.events-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.events-header p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Registrations Section Header */
+.registrations-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #28a745;
+}
+
+.registrations-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.registrations-header p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Event Card Styles */
+.event-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.event-card.registered {
+  border-left: 5px solid #28a745;
+  opacity: 0.95;
+}
+
+.event-card.registered:hover {
+  box-shadow: 0 8px 16px rgba(40, 167, 69, 0.2);
+}
+
+.event-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.event-title {
+  margin: 0;
+  color: #212529;
+  font-weight: 600;
+  font-size: 1.3rem;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.btn-participate {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-participate:hover {
+  background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+  color: white;
+  text-decoration: none;
+}
+
+.btn-participate:active {
+  transform: scale(0.98);
+}
+
+.badge-registered {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.event-description {
+  padding: 1rem 1.5rem;
+  color: #6c757d;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  flex: 1;
+}
+
+/* Event Details */
+.event-details {
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.detail-item i {
+  color: #007bff;
+  font-size: 1.3rem;
+  min-width: 24px;
+  margin-top: 2px;
+}
+
+.detail-label {
+  display: block;
+  color: #6c757d;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.detail-item p {
+  margin: 0;
+  color: #212529;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* No Events Message */
+.no-events {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-events i {
+  font-size: 4rem;
+  color: #dee2e6;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.no-events h4 {
+  color: #212529;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.no-events p {
+  color: #6c757d;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home-container {
+    padding: 1rem;
+  }
+
+  .user-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .user-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+
+  .events-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .event-header {
+    flex-direction: column;
+  }
+
+  .btn-participate {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .user-email {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-container {
+    padding: 0.5rem;
+  }
+
+  .events-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .event-card {
+    margin-bottom: 1rem;
+  }
+
+  .event-details {
+    padding: 1rem;
+  }
 }

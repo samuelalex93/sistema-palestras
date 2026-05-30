@@ -1,34 +1,164 @@
-@if (userData) {
-<div>
-  <ul>
-    <li>{{ userData.email }}</li>
-    <li>{{ userData.nome }}</li>
-    <li>{{ userData.admin ? 'admin' : 'normal' }}</li>
-  </ul>
-</div>
-}
-<h3>Bem vindo, {{userData?.nome}}</h3>
-<h1>Eventos disponíveis</h1>
-@if (palestras.length > 0) {
-<div id="gradeEventos">
-  @for (p of palestras; track p.id) {
-  <div class="card mb-3">
-    <div class="card-body">
-      <h5 class="card-title">{{ p.titulo }}</h5>
-      <p class="card-text">{{ p.descricao }}</p>
-      <p class="card-text">
-        <strong>Palestrante:</strong> {{ p.nomePalestrante }}<br />
-        <strong>Local:</strong> {{ p.localEvento }}<br />
-        <strong>Data:</strong> {{ p.dataEvento | date: 'dd/MM/yyyy' }}
-        <strong>Hora:</strong> {{ p.dataEvento | date: 'HH:mm' }} <br>
-        @if (!userData?.admin) {
-        <button (click)="inscricao(p.id)">Participar</button>
+<div class="home-container">
+  <!-- User Info Card -->
+  @if (userData) {
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="user-card">
+        <div class="user-header">
+          <div class="user-avatar">
+            {{ userData.nome.charAt(0).toUpperCase() }}
+          </div>
+          <div class="user-info">
+            <h3 class="user-name">Bem vindo, {{ userData.nome }}!</h3>
+            <p class="user-email">
+              <i class="bi bi-envelope"></i> {{ userData.email }}
+            </p>
+            @if (userData.admin) {
+            <span class="badge badge-admin">
+              <i class="bi bi-shield-check"></i> Administrador
+            </span>
+            }
+            @if (!userData.admin) {
+            <span class="badge badge-user">
+              <i class="bi bi-person"></i> Participante
+            </span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- My Registrations Section (Only for non-admin users) -->
+  @if (!userData?.admin && minhasInscricoes.length > 0) {
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="registrations-header">
+        <h2>Minhas Inscrições</h2>
+        <p class="text-muted">Você tem {{ minhasInscricoes.length }} inscrição(ões)</p>
+      </div>
+    </div>
+    @for (inscricao of minhasInscricoes; track inscricao.ID) {
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      @for (p of palestras; track p.id) {
+        @if (p.id === inscricao.idPalestra) {
+        <div class="event-card registered">
+          <div class="event-header">
+            <h5 class="event-title">{{ p.titulo }}</h5>
+            <span class="badge-registered">
+              <i class="bi bi-check-circle-fill"></i> Inscrito
+            </span>
+          </div>
+
+          <p class="event-description">{{ p.descricao }}</p>
+
+          <div class="event-details">
+            <div class="detail-item">
+              <i class="bi bi-person-badge"></i>
+              <div>
+                <span class="detail-label">Palestrante</span>
+                <p>{{ p.nomePalestrante }}</p>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <i class="bi bi-geo-alt"></i>
+              <div>
+                <span class="detail-label">Local</span>
+                <p>{{ p.localEvento }}</p>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <i class="bi bi-calendar3"></i>
+              <div>
+                <span class="detail-label">Data e Hora</span>
+                <p>{{ p.dataEvento | date: 'dd/MM/yyyy' }} às {{ p.dataEvento | date: 'HH:mm' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
         }
-      </p>
+      }
+    </div>
+    }
+  </div>
+  }
+  <div class="row">
+    <div class="col-12">
+      <div class="events-header">
+        <h1>Eventos Disponíveis</h1>
+        <p class="text-muted">Confira os eventos e faça sua inscrição</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Events Grid -->
+  @if (palestras.length > 0) {
+  <div class="row g-4">
+    @for (p of palestras; track p.id) {
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="event-card">
+        <div class="event-header">
+          <h5 class="event-title">{{ p.titulo }}</h5>
+          @if (!userData?.admin) {
+            @if (estaInscrito(p.id)) {
+            <span class="badge-registered">
+              <i class="bi bi-check-circle-fill"></i> Inscrito
+            </span>
+            } @else {
+            <button 
+              class="btn btn-participate"
+              (click)="inscricao(p.id)"
+              title="Participar deste evento"
+            >
+              <i class="bi bi-check-circle"></i> Participar
+            </button>
+            }
+          }
+        </div>
+
+        <p class="event-description">{{ p.descricao }}</p>
+
+        <div class="event-details">
+          <div class="detail-item">
+            <i class="bi bi-person-badge"></i>
+            <div>
+              <span class="detail-label">Palestrante</span>
+              <p>{{ p.nomePalestrante }}</p>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <i class="bi bi-geo-alt"></i>
+            <div>
+              <span class="detail-label">Local</span>
+              <p>{{ p.localEvento }}</p>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <i class="bi bi-calendar3"></i>
+            <div>
+              <span class="detail-label">Data e Hora</span>
+              <p>{{ p.dataEvento | date: 'dd/MM/yyyy' }} às {{ p.dataEvento | date: 'HH:mm' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  } @else {
+  <div class="row">
+    <div class="col-12">
+      <div class="no-events">
+        <i class="bi bi-inbox"></i>
+        <h4>Nenhum evento encontrado</h4>
+        <p class="text-muted">Volte mais tarde para conferir novos eventos</p>
+      </div>
     </div>
   </div>
   }
 </div>
-} @else {
-<p>Nenhum evento encontrado :(</p>
-}
