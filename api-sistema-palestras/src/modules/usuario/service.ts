@@ -1,4 +1,5 @@
 import usuarioRepository, { Usuario } from './repository';
+import CryptoHelper from '../../helpers/crypto';
 
 interface CadastroData {
   nome: string;
@@ -26,7 +27,9 @@ export class UsuarioService {
       throw new Error('Email já cadastrado');
     }
 
-    await usuarioRepository.create(data.nome, data.email, data.senha);
+    // Criptografar a senha antes de salvar
+    const senhaCriptografada = await CryptoHelper.hashPassword(data.senha);
+    await usuarioRepository.create(data.nome, data.email, senhaCriptografada);
   }
 
   async login(data: LoginData): Promise<UserResponse> {
@@ -36,7 +39,10 @@ export class UsuarioService {
       throw new Error('Email ou senha inválidos');
     }
 
-    if (usuario.senha !== data.senha) {
+    // Comparar a senha fornecida com o hash armazenado
+    const senhaValida = await CryptoHelper.comparePassword(data.senha, usuario.senha);
+
+    if (!senhaValida) {
       throw new Error('Senha inválida');
     }
 

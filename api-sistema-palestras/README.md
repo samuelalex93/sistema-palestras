@@ -44,13 +44,30 @@ Cada módulo segue a arquitetura em camadas:
 npm install
 ```
 
-2. Configure o arquivo `.env` com as credenciais do banco de dados:
+### 2. Configure o arquivo `.env` com as credenciais do banco de dados:
 ```
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=root_pass
 DB_NAME=sistema_palestras
 PORT=3000
+```
+
+### 3. Criar Admin via Seed
+
+Execute o seed para criar um usuário administrador com senha pré-definida:
+
+```bash
+npm run seed
+```
+
+**Saída esperada:**
+```
+🌱 Iniciando seed de dados...
+✅ Admin criado com sucesso!
+   Email: admin@sistema.com
+   Senha: admin123
+⚠️  IMPORTANTE: Altere a senha padrão do admin!
 ```
 
 ## Desenvolvimento
