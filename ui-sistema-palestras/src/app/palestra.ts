@@ -21,4 +21,20 @@ export class PalestraApi {
   listarPalestra(): Observable<Palestra[]> {
     return this.http.get<Palestra[]>(this.apiUrl);
   }
+  
+  buscarPorId(id: number): Observable<Palestra> {
+    return this.http.get<Palestra>(`${this.apiUrl}/${id}`);
+  }
+
+  criar(palestra: Partial<Palestra>): Observable<Palestra> {
+    return this.http.post<Palestra>(this.apiUrl, palestra);
+  }
+
+  atualizar(id: number, palestra: Partial<Palestra>): Observable<Palestra> {
+    return this.http.put<Palestra>(`${this.apiUrl}/${id}`, palestra);
+  }
+
+  remover(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
