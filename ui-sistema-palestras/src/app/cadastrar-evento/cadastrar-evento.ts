@@ -4,11 +4,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from
 import { Router } from '@angular/router';
 import { CadastroApi } from '../cadastro';
 
-interface respostaEvento {
-  message: string;
-  tipoMessagem: string
-}
-
 @Component({
   selector: 'app-cadastrar-evento',
   standalone: true,
