@@ -1,50 +1,90 @@
-<h1>Cadastro</h1>
-<form [formGroup]="formularioCadastro" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
-    <label for="email" class="form-label">Email</label>
-    <input type="email" class="form-control" formControlName="email" id="email">
-    @if(formularioCadastro.get('email')?.hasError('required') &&
-    formularioCadastro.get('email')?.touched) {
-    <p class="alert alert-warning">Campo <strong>email</strong> é
-      obrigatório!</p>
-    }
-  </div>
-  <div class="mb-3">
-    <label for="name" class="form-label">Nome</label>
-    <input type="text" class="form-control" id="name" formControlName="nome">
-    @if(formularioCadastro.get('nome')?.hasError('required') &&
-    formularioCadastro.get('nome')?.touched) {
-    <p class="alert alert-warning">Campo <strong>nome</strong> é
-      obrigatório!</p>
-    }
-    @if(formularioCadastro.get('nome')?.hasError('minlength') &&
-    formularioCadastro.get('nome')?.touched) {
-    <p class="alert alert-warning">Campo <strong>nome</strong> precisa
-      conter pelo menos 3 caracteres!</p>
-    }
-  </div>
-  <div class="mb-3">
-    <label for="password" class="form-label">Senha</label>
-    <input type="password" class="form-control" id="password" formControlName="senha" maxlength="30">
-    @if(formularioCadastro.get('senha')?.hasError('required') &&
-    formularioCadastro.get('senha')?.touched) {
-    <p class="alert alert-warning">Campo <strong>senha</strong> é
-      obrigatório!</p>
-    }
-    @if(formularioCadastro.get('senha')?.hasError('minlength') &&
-    formularioCadastro.get('senha')?.touched) {
-    <p class="alert alert-warning">Campo <strong>senha</strong> precisa
-      conter pelo menos 8 caracteres!</p>
-    }
-  </div>
-  <button type="submit" class="btn btn-primary" [disabled]="!formularioCadastro.valid">Criar conta</button>
-</form>
+<div class="container-login">
+  <div class="login-card-wrapper">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-primary text-white text-center">
+        <h3 class="mb-0"><i class="bi bi-person-plus"></i> Criar Conta</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="formularioCadastro" (ngSubmit)="onSubmit()">
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label"><strong>Email</strong></label>
+              <div class="input-group">
+                <span class="input-group-text bg-light">
+                  <i class="bi bi-envelope text-primary"></i>
+                </span>
+                <input type="email" class="form-control" formControlName="email" id="email" placeholder="seu@email.com"
+                [class.is-invalid]="formularioCadastro.get('email')?.invalid && formularioCadastro.get('email')?.touched">
+              </div>
+              @if(formularioCadastro.get('email')?.hasError('required') && formularioCadastro.get('email')?.touched) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle"></i> Campo <strong>email</strong> é obrigatório!
+              </div>
+              }
+            </div>
 
-@if (mensagem) {
-<div class="alert alert-{{ tipoMensagem }} alert-dismissible fade show" role="alert"
-  style="width: 20%; margin: 20px auto;">
-  {{ mensagem }}
-  <button type="button" class="btn-close" (click)="mensagem = ''" arialabel="Close">
-  </button>
-</div>
-}
+            <!-- Nome -->
+            <div class="mb-3">
+              <label for="name" class="form-label"><strong>Nome</strong></label>
+              <div class="input-group">
+                <span class="input-group-text bg-light">
+                  <i class="bi bi-person text-primary"></i>
+                </span>
+                <input type="text" class="form-control" id="name" formControlName="nome" placeholder="Seu nome"
+                [class.is-invalid]="formularioCadastro.get('nome')?.invalid && formularioCadastro.get('nome')?.touched">
+              </div>
+              @if(formularioCadastro.get('nome')?.hasError('required') && formularioCadastro.get('nome')?.touched) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle"></i> Campo <strong>nome</strong> é obrigatório!
+              </div>
+              }
+              @if(formularioCadastro.get('nome')?.hasError('minlength') && formularioCadastro.get('nome')?.touched) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle"></i> Campo <strong>nome</strong> precisa conter pelo menos 3 caracteres!
+              </div>
+              }
+            </div>
+
+            <!-- Senha -->
+            <div class="mb-4">
+              <label for="password" class="form-label"><strong>Senha</strong></label>
+              <div class="input-group">
+                <span class="input-group-text bg-light">
+                  <i class="bi bi-key text-primary"></i>
+                </span>
+                <input type="password" class="form-control" id="password" formControlName="senha" maxlength="30" placeholder="Mínimo 8 caracteres"
+                [class.is-invalid]="formularioCadastro.get('senha')?.invalid && formularioCadastro.get('senha')?.touched">
+              </div>
+              @if(formularioCadastro.get('senha')?.hasError('required') && formularioCadastro.get('senha')?.touched) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle"></i> Campo <strong>senha</strong> é obrigatório!
+              </div>
+              }
+              @if(formularioCadastro.get('senha')?.hasError('minlength') && formularioCadastro.get('senha')?.touched) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle"></i> Campo <strong>senha</strong> precisa conter pelo menos 8 caracteres!
+              </div>
+              }
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary w-100 btn-lg" [disabled]="!formularioCadastro.valid">
+                <i class="bi bi-check-circle"></i> Criar conta
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (mensagem) {
+  <div class="row justify-content-center mt-4">
+    <div class="col-lg-6 col-md-8">
+      <div class="alert alert-{{ tipoMensagem }} alert-dismissible fade show" role="alert">
+        <strong>{{ mensagem }}</strong>
+        <button type="button" class="btn-close" (click)="mensagem = ''" aria-label="Fechar"></button>
+      </div>
+    </div>
+  </div>
+  }

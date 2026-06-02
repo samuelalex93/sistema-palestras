@@ -1,11 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CadastroApi } from '../cadastro';
 
-interface respostaCadastro {
-  message: string;
-}
 @Component({
   selector: 'app-cadastro',
   standalone: true,
@@ -16,7 +13,12 @@ interface respostaCadastro {
 
 export class Cadastro {
 
-  constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) { }
+
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private cadastroApi: CadastroApi,
+  ) { }
 
   formularioCadastro = new FormGroup({
     email: new FormControl('', Validators.required),
@@ -35,11 +37,9 @@ export class Cadastro {
 
   onSubmit() {
     if (this.formularioCadastro.valid) {
-      this.http
-        .post<respostaCadastro>(
-          'http://localhost:3000/api/cadastro',
-          this.formularioCadastro.value
-        )
+      this.cadastroApi.salvarCadastro(
+        this.formularioCadastro.value
+      )
         .subscribe({
           next: (res) => {
             this.tipoMensagem = 'success';

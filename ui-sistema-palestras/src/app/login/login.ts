@@ -1,20 +1,9 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from
   '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Auth } from '../auth';
 
-interface respostaLogin {
-  message: string;
-  tipoMensagem: string;
-  userData: {
-    id: number;
-    email: string;
-    nome: string;
-    admin: boolean;
-  };
-}
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -24,7 +13,6 @@ interface respostaLogin {
 })
 export class Login {
   constructor(
-    private http: HttpClient,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private authService: Auth
@@ -46,9 +34,7 @@ export class Login {
   onSubmit() {
 
     if (this.formularioLogin.valid) {
-      this.http
-        .post<respostaLogin>(
-          'http://localhost:3000/api/login',
+      this.authService.loginUser(
           this.formularioLogin.value
         )
         .subscribe({

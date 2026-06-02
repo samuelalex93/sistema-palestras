@@ -1,3 +1,4 @@
+import { InscricaoApi, Inscricao, } from './../inscricoes';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../auth';
@@ -5,19 +6,12 @@ import { Router } from '@angular/router';
 
 import { PalestraApi, Palestra } from "../palestra";
 import { ChangeDetectorRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 interface UserData {
   id: number;
   email: string;
   nome: string;
   admin: boolean;
-}
-
-interface Inscricao {
-  ID: number;
-  idUsuario: number;
-  idPalestra: number;
 }
 
 @Component({
@@ -36,8 +30,8 @@ export class Home implements OnInit {
     private authService: Auth,
     private router: Router,
     private palestraApi: PalestraApi,
+    private inscricaoApi: InscricaoApi,
     private cd: ChangeDetectorRef,
-    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -62,9 +56,7 @@ export class Home implements OnInit {
   carregarMinhasInscricoes(): void {
     if (!this.userData) return;
 
-    this.http.get<Inscricao[]>(
-      `http://localhost:3000/api/inscricoes/usuario/${this.userData.id}`
-    ).subscribe({
+    this.inscricaoApi.buscarPorId(this.userData.id).subscribe({
       next: (inscricoes) => {
         this.minhasInscricoes = inscricoes;
         this.cd.detectChanges();
@@ -81,10 +73,10 @@ export class Home implements OnInit {
     const idUsuario = this.userData?.id;
     if (!idUsuario) return;
 
-    this.http.post<any>("http://localhost:3000/api/inscricao", {
+    this.inscricaoApi.salvarInscricao(
       idUsuario,
       idPalestra
-    }).subscribe({
+    ).subscribe({
       next: (res) => {
         alert(res.message);
         this.carregarMinhasInscricoes();
@@ -94,4 +86,5 @@ export class Home implements OnInit {
       }
     });
   }
+  
 }

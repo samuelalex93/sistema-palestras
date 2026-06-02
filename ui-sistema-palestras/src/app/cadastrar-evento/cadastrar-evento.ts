@@ -1,8 +1,8 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from
   '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CadastroApi } from '../cadastro';
 
 interface respostaEvento {
   message: string;
@@ -18,7 +18,7 @@ interface respostaEvento {
 })
 export class CadastrarEvento {
   constructor(
-    private http: HttpClient,
+    private cadastroApi: CadastroApi,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) { }
@@ -37,9 +37,7 @@ export class CadastrarEvento {
   onSubmit() {
 
     if (this.formularioPalestras.valid) {
-      this.http
-        .post<any>(
-          'http://localhost:3000/api/admin',
+      this.cadastroApi.salvarEvento(
           this.formularioPalestras.value
         )
         .subscribe({
