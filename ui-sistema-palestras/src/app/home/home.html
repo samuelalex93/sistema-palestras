@@ -50,22 +50,23 @@
       </div>
     </div>
 
-    @for (inscricao of minhasInscricoes; track inscricao.ID) {
+    @for (inscricao of minhasInscricoes; track inscricao.id) {
     <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 
       @for (p of palestras; track p.id) {
       @if (p.id === inscricao.idPalestra) {
-
       <div class="event-card shadow-sm registered">
         <div class="event-header">
           <h5 class="event-title fw-semibold">
             {{ p.titulo }}
           </h5>
 
-          <span class="badge bg-primary badge-registered">
-            <i class="bi bi-check-circle-fill me-1"></i>
-            Inscrito
-          </span>
+          <div class="event-actions">
+            <button class="btn btn-cancel w-100" (click)="cancelarInscricao(inscricao.id)">
+              <i class="bi bi-x-circle me-1"></i>
+              Cancelar inscrição
+            </button>
+          </div>
         </div>
 
         <p class="event-description">
@@ -111,7 +112,7 @@
               </p>
             </div>
           </div>
-
+          
         </div>
       </div>
 
@@ -136,10 +137,10 @@
     </div>
   </div>
 
-  @if (palestras.length > 0) {
+  @if (palestrasDisponiveis.length > 0) {
   <div class="row g-4">
 
-    @for (p of palestras; track p.id) {
+    @for (p of palestrasDisponiveis; track p.id) {
 
     <div class="col-lg-4 col-md-6 col-sm-12">
 
@@ -152,19 +153,10 @@
           </h5>
 
           @if (!userData?.admin) {
-
-          @if (estaInscrito(p.id)) {
-          <span class="badge bg-primary badge-registered">
-            <i class="bi bi-check-circle-fill me-1"></i>
-            Inscrito
-          </span>
-          } @else {
           <button class="btn btn-participate" (click)="inscricao(p.id)">
             <i class="bi bi-check-circle me-1"></i>
             Participar
           </button>
-          }
-
           }
 
         </div>

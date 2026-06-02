@@ -105,6 +105,18 @@
   transform: scale(1.03);
 }
 
+.btn-cancel {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  border: none;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.btn-cancel:hover {
+  color: #fff;
+  transform: scale(1.03);
+}
+
 .badge-registered {
   white-space: nowrap;
 }
@@ -128,7 +140,8 @@
     flex-direction: column;
   }
 
-  .btn-participate {
+  .btn-participate,
+  .btn-cancel {
     width: 100%;
   }
 }

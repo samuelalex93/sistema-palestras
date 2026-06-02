@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Inscricao {
-  ID: number;
+  id: number;
   idUsuario: number;
   idPalestra: number;
 }
@@ -24,5 +24,9 @@ export class InscricaoApi {
       idUsuario,
       idPalestra
     });
+  }
+
+  cancelarInscricao(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/inscricoes/${id}`);
   }
 }

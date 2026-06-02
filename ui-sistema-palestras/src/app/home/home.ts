@@ -69,6 +69,33 @@ export class Home implements OnInit {
     return this.minhasInscricoes.some(i => i.idPalestra === idPalestra);
   }
 
+  get palestrasDisponiveis(): Palestra[] {
+    if (this.userData?.admin) {
+      return this.palestras;
+    }
+    return this.palestras.filter(p => !this.estaInscrito(p.id));
+  }
+
+  obterIdInscricao(idPalestra: number): number | undefined {
+    return this.minhasInscricoes.find(i => i.idPalestra === idPalestra)?.id;
+  }
+
+  cancelarInscricao(idInscricao: number): void {
+    if (!idInscricao) return;
+
+    if (!confirm('Deseja cancelar sua inscrição neste evento?')) return;
+
+    this.inscricaoApi.cancelarInscricao(idInscricao).subscribe({
+      next: (res) => {
+        alert(res.message);
+        this.carregarMinhasInscricoes();
+      },
+      error: (err) => {
+        alert(err.error?.message ?? 'Erro ao cancelar inscrição');
+      }
+    });
+  }
+
   inscricao(idPalestra: number): void {
     const idUsuario = this.userData?.id;
     if (!idUsuario) return;
