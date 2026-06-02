@@ -15,6 +15,10 @@ export class InscricaoApi {
   private apiUrl = "http://localhost:3000/api";
   constructor(private http: HttpClient) { }
 
+  listar(): Observable<Inscricao[]> {
+    return this.http.get<Inscricao[]>(`${this.apiUrl}/inscricoes`);
+  }
+
   buscarPorId(id: number): Observable<Inscricao[]> {
     return this.http.get<Inscricao[]>(`${this.apiUrl}/inscricoes/usuario/${id}`);
   }

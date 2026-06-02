@@ -117,7 +117,8 @@
   transform: scale(1.03);
 }
 
-.badge-registered {
+.badge-registered,
+.badge-inscritos {
   white-space: nowrap;
 }
 

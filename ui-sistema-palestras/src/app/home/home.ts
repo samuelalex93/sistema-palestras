@@ -25,6 +25,7 @@ export class Home implements OnInit {
   palestras: Palestra[] = [];
   userData: UserData | null = null;
   minhasInscricoes: Inscricao[] = [];
+  inscricoesPorPalestra: Record<number, number> = {};
 
   constructor(
     private authService: Auth,
@@ -48,9 +49,29 @@ export class Home implements OnInit {
       error: (err) => console.log("Erro ao carregar dados", err),
     });
 
-    if (this.userData && !this.userData.admin) {
+    if (this.userData?.admin) {
+      this.carregarInscricoesAdmin();
+    } else if (this.userData) {
       this.carregarMinhasInscricoes();
     }
+  }
+
+  carregarInscricoesAdmin(): void {
+    this.inscricaoApi.listar().subscribe({
+      next: (inscricoes) => {
+        this.inscricoesPorPalestra = {};
+        for (const inscricao of inscricoes) {
+          this.inscricoesPorPalestra[inscricao.idPalestra] =
+            (this.inscricoesPorPalestra[inscricao.idPalestra] ?? 0) + 1;
+        }
+        this.cd.detectChanges();
+      },
+      error: (err) => console.log('Erro ao carregar inscrições', err),
+    });
+  }
+
+  contarInscritos(idPalestra: number): number {
+    return this.inscricoesPorPalestra[idPalestra] ?? 0;
   }
 
   carregarMinhasInscricoes(): void {
